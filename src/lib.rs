@@ -42,7 +42,8 @@ fn get_sortkey_u8<'a>(source: &[u8]) -> Cow<'a, [u8]> {
   let mut sortkey: Vec<u8> = Vec::new();
 
   // Get from struct
-  let locale: Locale = Locale::try_from_str("en-us").expect("No such locale");
+  let name = "en_US";
+  let locale: Locale = Locale::try_from_str(&name.replace("_", "-")).expect("No such locale");
 
   let mut options = CollatorOptions::default();
   options.strength = Some(Strength::Quaternary);
