@@ -1,8 +1,5 @@
 #![allow(dead_code, non_camel_case_types)]
 
-use bstr::B;
-use bstr::ByteSlice;
-
 use icu_locale::Locale;
 use icu_collator::{Collator, options::{CollatorOptions, Strength}};
 
@@ -59,7 +56,7 @@ fn get_sortkey_u32<'a>(source: &[u32]) -> Cow<'a, [u32]> {
   let source: &[u8] = &source.iter().filter_map(|c| char::from_u32(*c)).collect::<String>().into_bytes();
 
   let sortkey: &[u8] = &get_sortkey_u8(source);
-  let result: Vec<u32> = B(sortkey).chars().map(|c| c as u32).collect();
+  let result: Vec<u32> = sortkey.into_iter().copied().map(|c| c as u32).collect();
 
   Cow::Owned(result)
 }
